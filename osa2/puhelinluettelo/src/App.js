@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
+import AddPerson from './components/AddPerson'
+import Display from './components/Display'
 
 
-const Display = ({person}) => {
-  return (
-    <p>{person.name} {person.number}</p>
-  )
-}
+
+
+
+
 
 
 const App = () => {
@@ -26,28 +27,21 @@ const App = () => {
     setNewNumber(event.target.value)
   }
 
-  const addPerson = (event) => {
-    const found = persons.find(element => element.name === newName);
+  const handeFormSubmit = (event) => {
     event.preventDefault()
-    if (found===undefined) {
-      const personObject = {
-        name: newName,
-        number: newNumber
-      }
-      setPersons(persons.concat(personObject))
+    AddPerson(event,persons,setPersons)
+    setNewName('')
+    setNewNumber('')
     
-    }
-    else {
-      alert(`${newName} is already added to phonebook`)
-    }
-    
-  setNewName('')
-}
+  }
+
+
+  
 
   return (
     <div>
       <h2>Phonebook</h2>
-      <form onSubmit={addPerson}>
+      <form onSubmit={handeFormSubmit}>
         <div>
           name: <input value={newName} onChange={handleNameChange}/>
         </div>
@@ -64,7 +58,6 @@ const App = () => {
         )}
     </div>
   )
-
 }
 
 export default App
