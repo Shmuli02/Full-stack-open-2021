@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import AddPerson from './components/AddPerson'
+import Person from './components/Person'
 import Display from './components/Display'
 import axios from 'axios'
 
@@ -11,7 +11,7 @@ import axios from 'axios'
 
 
 const App = () => {
-  const [persons, setPersons] = useState([])
+  const [ persons, setPersons] = useState([])
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber] = useState('')
 
@@ -31,12 +31,13 @@ const App = () => {
     setNewNumber(event.target.value)
   }
 
-  const handeFormSubmit = (event) => {
+  const handleFormSubmit = (event) => {
     event.preventDefault()
-    AddPerson(event,persons,setPersons)
-    setNewName('')
-    setNewNumber('')
-    
+    Person.addPerson(event,persons,setPersons, setNewName, setNewNumber)
+  }
+
+  const handlePersonDelete = (event) => {
+    Person.dellPerson(event)
   }
 
 
@@ -45,7 +46,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <form onSubmit={handeFormSubmit}>
+      <form onSubmit={handleFormSubmit}>
         <div>
           name: <input value={newName} onChange={handleNameChange}/>
         </div>
@@ -57,8 +58,11 @@ const App = () => {
         </div>
       </form>
       <h2>Numbers</h2>
-      {persons.map(person => 
-        <Display key={person.name} person={person}/>
+      {persons.map(person =>
+      <div>
+          <Display key={person.name} person={person}/>
+          <button value={person.id} onClick={handlePersonDelete}>Delete</button>
+        </div>
         )}
     </div>
   )

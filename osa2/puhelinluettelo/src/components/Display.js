@@ -1,8 +1,8 @@
-import React from 'react'
-
 const Display = ({person}) => {
     return (
+      <div>
       <p>{person.name} {person.number}</p>
+      </div>
     )
   }
 
