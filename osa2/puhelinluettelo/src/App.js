@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import Person from './components/Person'
 import Display from './components/Display'
+import Notification from './components/Notification'
 import axios from 'axios'
+import './index.css'
 
 
 
@@ -14,6 +16,7 @@ const App = () => {
   const [ persons, setPersons] = useState([])
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber] = useState('')
+  const [errorMessage, setErrorMessage] = useState(null)
 
   useEffect(() => {
     axios
@@ -33,7 +36,7 @@ const App = () => {
 
   const handleFormSubmit = (event) => {
     event.preventDefault()
-    Person.addPerson(event,persons,setPersons, setNewName, setNewNumber)
+    Person.addPerson(event,persons,setPersons, setNewName, setNewNumber,setErrorMessage)
   }
 
   const handlePersonDelete = (event) => {
@@ -46,6 +49,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={errorMessage} />
       <form onSubmit={handleFormSubmit}>
         <div>
           name: <input value={newName} onChange={handleNameChange}/>
@@ -57,7 +61,7 @@ const App = () => {
           <button type="submit" >add</button>
         </div>
       </form>
-      <h2>Numbers</h2>
+      <h3>Numbers</h3>
       {persons.map(person =>
       <div>
           <Display key={person.name} person={person}/>

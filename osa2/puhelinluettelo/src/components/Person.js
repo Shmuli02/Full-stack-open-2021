@@ -1,6 +1,6 @@
 import personService from '../services/persons'
 
-const addPerson = (event,persons,setPersons, setNewName, setNewNumber) => {
+const addPerson = (event,persons,setPersons, setNewName, setNewNumber,setErrorMessage) => {
     const newName = event.target[0].value
     const newNumber = event.target[1].value
     const found = persons.find(element => element.name === newName);
@@ -15,6 +15,10 @@ const addPerson = (event,persons,setPersons, setNewName, setNewNumber) => {
           setPersons(persons.concat(personObject))
           setNewName('')
           setNewNumber('')
+          setErrorMessage(`Added ${personObject.name}`)
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 3000)
         })
     
     }
