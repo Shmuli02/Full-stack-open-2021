@@ -25,17 +25,19 @@ const addPerson = (event,persons,setPersons, setNewName, setNewNumber,setErrorMe
     else {
       if (window.confirm(`${newName} is already added to phonebook, replacethe old number with a new one?`)) {
         console.log('kylla')
-        console.log(found)
-        editPerson(event,personObject,found.id)
+        personObject.id = found.id
+        editPerson(event,personObject)
+        setNewName('')
+        setNewNumber('')
 
       }
     }
     
   
   }
-const editPerson = (event,personObject,id) => {
+const editPerson = (event,personObject) => {
   personService
-    .put(personObject,id)
+    .put(personObject)
 }
 
 const dellPerson = (event) => {
