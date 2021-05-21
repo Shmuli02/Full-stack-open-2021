@@ -20,6 +20,12 @@ const addPerson = (event,persons,setPersons, setNewName, setNewNumber,setErrorMe
             setErrorMessage(null)
           }, 3000)
         })
+        .catch(error => {
+          setErrorMessage(error.response.data.error)
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 3000)
+        })
     
     }
     else {
@@ -40,9 +46,15 @@ const editPerson = (event,personObject) => {
     .put(personObject)
 }
 
-const dellPerson = (event) => {
+const dellPerson = (event,setPersons) => {
+  console.log(event)
     if (window.confirm(`Delete`)) {
       personService.dell(event.target.value).then(response => {
+        personService
+        .getAll()
+        .then(response => {
+          setPersons(response)
+        })
       })
     }
 }

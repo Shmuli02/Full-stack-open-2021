@@ -4,6 +4,7 @@ import Display from './components/Display'
 import Notification from './components/Notification'
 import axios from 'axios'
 import './index.css'
+import personService from './services/persons'
 
 
 
@@ -19,10 +20,10 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState(null)
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/api/persons')
+    personService
+      .getAll()
       .then(response => {
-        setPersons(response.data)
+        setPersons(response)
       })
   }, [])
 
@@ -40,7 +41,7 @@ const App = () => {
   }
 
   const handlePersonDelete = (event) => {
-    Person.dellPerson(event)
+    Person.dellPerson(event,setPersons)
   }
 
 
